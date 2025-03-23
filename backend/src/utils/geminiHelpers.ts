@@ -8,7 +8,7 @@ if (!process.env.GEMINI_API_KEY) {
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
-const getGeminiResponse = async (entry_text: string, mode: string, chatHistory: string): Promise<string> => {
+export const getGeminiResponse = async (entry_text: string, mode: string, chatHistory: string): Promise<string> => {
   try {
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) throw new Error("GEMINI_API_KEY is not set in environment variables.");
@@ -21,7 +21,7 @@ const getGeminiResponse = async (entry_text: string, mode: string, chatHistory: 
         body: JSON.stringify({
           contents: [{
             parts: [{
-              text: `Respond as a ${mode} therapist. Here is the chat history:\n${chatHistory}\nUser shares: "${entry_text}". Provide a response that aligns with the ${mode} approach while offering thoughtful and empathetic insights.`
+              text: `Respond as a ${mode} therapist. Here is the chat history:\n${chatHistory}\nUser shares: "${entry_text}". Provide a response that aligns with the ${mode} approach while offering thoughtful and empathetic insights.Message length should be to the point but should be meaningful`
             }]
           }]
         }),
@@ -42,6 +42,7 @@ const getGeminiResponse = async (entry_text: string, mode: string, chatHistory: 
     throw error;
   }
 };
+
 
 export const generateEmbeddings = async (text: string): Promise<number[]> => {
     try {

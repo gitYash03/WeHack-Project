@@ -1,10 +1,12 @@
 import express from "express";
-import { createOrUpdateJournalEntry, getPrompt, deleteJournalEntry, getAllJournalEntries, searchJournalEntries } from "./journalController";
+import { createJournalChat, createOrUpdateJournalEntry, getPrompt, deleteJournalEntry, getAllJournalEntries, searchJournalEntries } from "./journalController";
 
 const router = express.Router();
 
 // Create or update a journal entry (with embeddings)
 router.post("/", createOrUpdateJournalEntry);
+
+router.post("/chat", createJournalChat);
 
 // Get all journal entries for a given user
 router.get("/all/:userId", getAllJournalEntries);

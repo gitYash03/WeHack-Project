@@ -3,8 +3,44 @@ import pool from "../../config/db";
 import { journalEmbeddingSchema } from "./validators/journalEmbeddings";
 import { journalEntrySchema } from './validators/journalEntry';
 import { getPromptSchema } from './validators/getPrompt';
-import { analyzeEmotions, generateEmbeddings, emotionAnalysisAndGeneratePrompt, generateGeminiPrompt } from '../../utils/geminiHelpers';
+import { journalChatSchema } from './validators/journalChat';
+import { getGeminiResponse,analyzeEmotions, generateEmbeddings, emotionAnalysisAndGeneratePrompt, generateGeminiPrompt } from '../../utils/geminiHelpers';
 import { z } from "zod";
+
+export const createJournalChat: RequestHandler = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
+  try {
+    const { entry_text, mode, user_uuid, conversation_id } = journalChatSchema.parse(req.body);
+    console.log(mode);
+    const chatHistoryResult = await pool.query(
+      `SELECT sender, message_text FROM journal_messages WHERE user_uuid = $1 ORDER BY created_at DESC LIMIT 5`,
+      [user_uuid]
+    );
+
+    const chatHistoryText = chatHistoryResult.rows
+      .map((chat: { sender: string, message_text: string }) => `${chat.sender}: ${chat.message_text}`)
+      .join("\n");
+
+    const aiReply = await getGeminiResponse(entry_text, mode, chatHistoryText);
+
+    await pool.query(
+      `INSERT INTO journal_messages (user_uuid, conversation_id, sender, message_text, mode) VALUES ($1, $2, $3, $4, $5)`,
+      [user_uuid, conversation_id, "user", entry_text, mode]
+    );
+    await pool.query(
+      `INSERT INTO journal_messages (user_uuid, conversation_id, sender, message_text, mode) VALUES ($1, $2, $3, $4, $5)`,
+      [user_uuid, conversation_id, "ai", aiReply, mode]
+    );
+
+    res.status(200).json({ response_text: aiReply });
+  } catch (error) {
+    console.error("Error in createJournalChat:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
 
 // Existing getPrompt function (unchanged)
 export const getPrompt: RequestHandler = async (req, res, next): Promise<void> => {
@@ -167,9 +203,6 @@ export const createOrUpdateJournalEntry: RequestHandler = async (req, res, next)
     client.release();
   }
 };
-
-
-// Remove duplicate controller functions - ensure this is only declared once in the file
 
 
 export const deleteJournalEntry: RequestHandler = async (req, res, next): Promise<void> => {
