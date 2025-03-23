@@ -86,8 +86,8 @@ function Journal({ hasAnimatedRef }) {
   };
 
   return (
-    <div className="space-y-4 p-6 min-h-screen bg-white">
-      <h1 className="text-2xl font-semibold text-center mb-4">Journal Entries</h1>
+    <div className="space-y-4 p-6 min-h-screen bg-gray-100">
+      <h1 className="text-2xl font-semibold text-center mb-4 mt-4 ">Journal Entries</h1>
 
       {displayedMessages.length === 0 ? (
         <p className="text-gray-500 text-center">Start writing</p>
@@ -102,7 +102,7 @@ function Journal({ hasAnimatedRef }) {
               setIsAiTypingComplete={setIsAiTypingComplete}
             />
           ) : (
-            <p key={message.id} className="p-3 rounded-lg text-black font-bold text-lg">
+            <p key={message.id} className="p-3 rounded-lg text-black font-medium text-lg ">
               {message.content}
             </p>
           )

@@ -59,7 +59,6 @@ function HistorySection() {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           className="border p-2 rounded w-full"
-          style={{ backgroundColor: 'yellow' }} // Remove this style once you confirm the input is visible.
         />
       </div>
 

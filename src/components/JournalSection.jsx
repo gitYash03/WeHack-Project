@@ -109,7 +109,7 @@ function JournalSection({ userData, newEntry, setNewEntry, handleAddEntry, aiRes
           {messages.map((msg, index) => (
             <div
               key={index}
-              className={`p-3 max-w-xs md:max-w-sm lg:max-w-md text-white rounded-lg ${msg.sender === "user" ? "bg-blue-500 self-end" : "bg-green-500 self-start"}`}
+              className={`p-3 max-w-xs md:max-w-sm lg:max-w-md text-white rounded-lg ${msg.sender === "user" ? "bg-blue-500 self-end" : "bg-violet-500 self-start"}`}
             >
               {msg.text}
             </div>
