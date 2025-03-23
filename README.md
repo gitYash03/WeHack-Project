@@ -88,13 +88,13 @@ To set up and run the MindSync project on your local machine, follow these steps
    JWT_SECRET=your_jwt_secret
    ```
 
-   Replace `your_*` placeholders with actual values. Using a `.env` file helps manage environment variables securely. citeturn0search2
-
-5. **Create database tables:**
+   Replace `your_*` placeholders with actual values. Using a `.env` file helps manage environment variables securely.
+   
+6. **Create database tables:**
 
    Initialize the PostgreSQL database and create the necessary tables as defined in `backend/src/models`. You can use an ORM like Sequelize to synchronize models with the database or run SQL scripts manually. citeturn0search3
 
-6. **Start the Express server:**
+7. **Start the Express server:**
 
    Compile and run the server using:
 
@@ -104,7 +104,7 @@ To set up and run the MindSync project on your local machine, follow these steps
 
    Ensure `ts-node` is installed globally or as a project dependency.
 
-7. **Start the React development server:**
+8. **Start the React development server:**
 
    Navigate to the frontend directory (if applicable) and start the React server:
 
@@ -112,7 +112,7 @@ To set up and run the MindSync project on your local machine, follow these steps
    npm run dev
    ```
 
-8. **Access the application:**
+9. **Access the application:**
 
    Open your browser and navigate to `http://localhost:your_desired_port` to interact with MindSync.
 
