@@ -1,9 +1,0 @@
-POST http://localhost:5000/api/journals/chat
-Content-Type: application/json
-
-{
-  "entry_text": "I had a stressful day today.",
-  "mode": "Sensitive",         
-  "user_uuid": "01234567-89ab-cdef-0123-456789abcdef",
-  "conversation_id": "conv-001" 
-}
