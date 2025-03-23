@@ -14,7 +14,6 @@ Introducing MindSync - An AI powered AI journaling app. Journaling helps you pro
 ## Images
 
 ![Screenshot from 2025-03-23 08-22-41](https://github.com/user-attachments/assets/243d310f-b973-4163-aa2c-87a3da6dd685)
-![Screenshot from 2025-03-23 07-34-04](https://github.com/user-attachments/assets/f1bbc53d-1cde-43fa-a2a5-6b8ef914e28d)
 ![Screenshot from 2025-03-23 07-33-35](https://github.com/user-attachments/assets/1b76c890-61c3-497a-9182-ba2c2c8bc31e)
 ![Screenshot from 2025-03-23 07-33-22](https://github.com/user-attachments/assets/e3f907be-81ce-486f-8528-c6c29e12f185)
 ![Screenshot from 2025-03-23 07-32-20](https://github.com/user-attachments/assets/5ede6121-aef0-464e-b1f5-083712d59b29)
