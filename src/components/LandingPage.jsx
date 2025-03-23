@@ -3,14 +3,19 @@ import React, { useState } from "react";
 const LandingPage = () => {
   console.log("Rendering LandingPage");
 
-  const [isLoginOpen, setIsLoginOpen] = useState(false);
+  // Remove (or comment out) old login state and modal logic
+  // const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isSignUpOpen, setIsSignUpOpen] = useState(false);
+
+  // NEW: Google Sign In function from SignIn component
+  const handleGoogleSignIn = () => {
+    window.location.href = "http://localhost:5000/auth/google";
+  };
 
   const scrollToSection = (id) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   };
 
-  // Error boundary for debugging
   try {
     return (
       <div className="bg-[#E6ECFF] min-h-screen flex flex-col">
@@ -25,35 +30,39 @@ const LandingPage = () => {
             </button>
           </div>
           <div className="space-x-4">
+            {/* UPDATED: Replace Log In onClick logic with Google Sign In */}
             <button 
-              onClick={() => setIsLoginOpen(true)}
+              onClick={handleGoogleSignIn}
               className="px-4 py-2 text-indigo-600 border border-indigo-600 rounded hover:bg-indigo-600 hover:text-white transition"
             >
               Log In
             </button>
-            <button 
+            {/* <button 
               onClick={() => setIsSignUpOpen(true)}
               className="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition"
             >
               Sign Up
-            </button>
+            </button> */}
           </div>
         </nav>
 
-        {/* Login Modal */}
-        {isLoginOpen && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-            <div className="bg-white p-6 rounded-lg shadow-lg w-96">
-              <h2 className="text-2xl font-bold">Welcome Back</h2>
-              <p className="text-gray-600">Sign in to your AI journaling account</p>
-              <input type="email" placeholder="Your email address" className="w-full mt-4 p-2 border rounded" />
-              <input type="password" placeholder="Your password" className="w-full mt-2 p-2 border rounded" />
-              <button className="w-full mt-4 bg-indigo-600 text-white py-2 rounded">Sign In</button>
-              <p className="text-gray-600 mt-2">Don't have an account? <span className="text-indigo-600 cursor-pointer" onClick={() => { setIsLoginOpen(false); setIsSignUpOpen(true); }}>Sign up</span></p>
-              <button className="absolute top-4 right-4 text-gray-600" onClick={() => setIsLoginOpen(false)}>✕</button>
+        {/* 
+          OLD Login Modal Logic Commented Out:
+          
+          {isLoginOpen && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+              <div className="bg-white p-6 rounded-lg shadow-lg w-96">
+                <h2 className="text-2xl font-bold">Welcome Back</h2>
+                <p className="text-gray-600">Sign in to your AI journaling account</p>
+                <input type="email" placeholder="Your email address" className="w-full mt-4 p-2 border rounded" />
+                <input type="password" placeholder="Your password" className="w-full mt-2 p-2 border rounded" />
+                <button className="w-full mt-4 bg-indigo-600 text-white py-2 rounded">Sign In</button>
+                <p className="text-gray-600 mt-2">Don't have an account? <span className="text-indigo-600 cursor-pointer" onClick={() => { setIsLoginOpen(false); setIsSignUpOpen(true); }}>Sign up</span></p>
+                <button className="absolute top-4 right-4 text-gray-600" onClick={() => setIsLoginOpen(false)}>✕</button>
+              </div>
             </div>
-          </div>
-        )}
+          )}
+        */}
 
         {/* Signup Modal */}
         {isSignUpOpen && (
@@ -70,7 +79,7 @@ const LandingPage = () => {
                 <span>I agree to the Terms of Service and Privacy Policy</span>
               </div>
               <button className="w-full mt-4 bg-indigo-600 text-white py-2 rounded">Create Account</button>
-              <p className="text-gray-600 mt-2">Already have an account? <span className="text-indigo-600 cursor-pointer" onClick={() => { setIsSignUpOpen(false); setIsLoginOpen(true); }}>Sign in</span></p>
+              <p className="text-gray-600 mt-2">Already have an account? <span className="text-indigo-600 cursor-pointer" onClick={() => { setIsSignUpOpen(false); /* setIsLoginOpen(true); */ }}>Sign in</span></p>
               <button className="absolute top-4 right-4 text-gray-600" onClick={() => setIsSignUpOpen(false)}>✕</button>
             </div>
           </div>

@@ -4,7 +4,6 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { decodeJwt } from "./utils/jwt";
 import NavItem from "./components/NavItem";
 import AppRoutes from "./routes/AppRoutes";
-import { v4 as uuidv4 } from "uuid";
 
 function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -17,6 +16,7 @@ function App() {
   const [userData, setUserData] = useState(null);
   const location = useLocation();
 
+  // Retrieve user authentication from local storage
   useEffect(() => {
     const token = localStorage.getItem("token");
     const storedUser = localStorage.getItem("userData");
@@ -26,6 +26,7 @@ function App() {
     }
   }, []);
 
+  // Handle token from URL params (if any)
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const token = params.get("token");
@@ -44,8 +45,7 @@ function App() {
     }
   }, [location.search, location.pathname, navigate]);
 
-  
-
+  // Function to handle adding a new journal entry
   async function handleAddEntry() {
     if (!newEntry.trim()) return;
     try {
@@ -57,7 +57,7 @@ function App() {
       if (!response.ok) throw new Error("Failed to save entry.");
       const savedEntry = await response.json();
       const userEntry = { id: savedEntry.entry.id, role: "user", content: newEntry };
-      const aiResponse = { id: uuidv4(), role: "ai", content: "That's a great thought! How do you feel about it?" };
+      const aiResponse = { id: Date.now(), role: "ai", content: "That's a great thought! How do you feel about it?" };
       setEntries((prev) => [savedEntry.entry, ...prev]);
       setAiResponses((prev) => [...prev, userEntry, aiResponse]);
       setNewEntry("");
@@ -67,6 +67,7 @@ function App() {
     }
   }
 
+  // Function to fetch prompt data based on entry text
   async function getPrompt(entryText) {
     try {
       const response = await fetch(`http://localhost:5000/api/journals/prompt?entryText=${encodeURIComponent(entryText)}`);
@@ -80,15 +81,25 @@ function App() {
 
   return (
     <div className="flex h-screen bg-neutral-50 text-neutral-800 font-sans">
-      <aside className={`bg-white shadow-md flex flex-col items-center py-8 space-y-8 transition-all duration-300 ${isSidebarOpen ? "w-40" : "w-0 hidden"} sm:w-16`}>
-        <button className="p-2 rounded-lg hover:bg-neutral-100 transition-colors duration-200 sm:hidden" onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
-          <Menu className="w-6 h-6 text-neutral-600" />
-        </button>
-        <NavItem icon={History} label="History" to="/history" />
-        <NavItem icon={BookOpen} label="Home" to="/home" />
-        <NavItem icon={Notebook} label="Journal" to="/journal" />
-        <NavItem icon={Settings} label="Settings" to="/settings" />
-      </aside>
+      {/* Show sidebar only when user is signed in and NOT on the /landingpage route */}
+      {userData && location.pathname !== "/landingpage" && (
+        <aside
+          className={`bg-white shadow-md flex flex-col items-center py-8 space-y-8 transition-all duration-300 ${
+            isSidebarOpen ? "w-40" : "w-0 hidden"
+          } sm:w-16`}
+        >
+          <button
+            className="p-2 rounded-lg hover:bg-neutral-100 transition-colors duration-200 sm:hidden"
+            onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+          >
+            <Menu className="w-6 h-6 text-neutral-600" />
+          </button>
+          <NavItem icon={History} label="History" to="/history" />
+          <NavItem icon={BookOpen} label="Home" to="/home" />
+          <NavItem icon={Notebook} label="Journal" to="/journal" />
+          <NavItem icon={Settings} label="Settings" to="/settings" />
+        </aside>
+      )}
 
       <main className="flex-1 flex flex-col items-center justify-center w-full">
         <div className="w-full max-w-screen">
