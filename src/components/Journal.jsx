@@ -153,7 +153,7 @@ function TypingText({ text, messageId, hasAnimatedRef, setIsAiTypingComplete }) 
 
     let currentIndex = 0;
     const typeCharacter = () => {
-      if (currentIndex < text.length) {
+      if (currentIndex < text.length-1) {
         setDisplayedText((prev) => prev + text[currentIndex]);
         currentIndex++;
         animationRef.current = setTimeout(typeCharacter, 30);
