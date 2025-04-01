@@ -45,6 +45,17 @@ function App() {
     }
   }, [location.search, location.pathname, navigate]);
 
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("userData");
+    localStorage.setItem("isSignedIn", "false");
+    setIsSignedIn(false);
+    setUserData(null);
+    // Navigate to SignIn page (adjust the path if necessary)
+    navigate("/landingpage");
+  };
+
+
   // Function to handle adding a new journal entry
   async function handleAddEntry() {
     if (!newEntry.trim()) return;
@@ -111,6 +122,7 @@ function App() {
             getPrompt={getPrompt}
             userData={userData}
             hasAnimatedRef={hasAnimatedRef}
+            handleLogout={handleLogout}
           />
         </div>
       </main>

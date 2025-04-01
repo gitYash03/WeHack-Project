@@ -1,10 +1,10 @@
-import PropTypes from 'prop-types';
-import React from 'react';
+import PropTypes from "prop-types";
+import React from "react";
 
-function SettingSection({ userData }) {
+function SettingSection({ userData, handleLogout }) {
   return (
     <div className="space-y-4">
-      {/* Dump signed in user data */}
+      {/* Display signed-in user data */}
       <div className="bg-white p-4 border border-neutral-200 rounded-lg shadow-sm">
         <h3 className="font-bold mb-2">User Data</h3>
         <pre className="text-xs bg-gray-100 p-2 rounded">
@@ -18,10 +18,19 @@ function SettingSection({ userData }) {
           Enable
         </button>
       </div>
+
       <div className="flex justify-between items-center bg-white p-4 border border-neutral-200 rounded-lg shadow-sm">
         <span>Enable Notifications</span>
         <button className="bg-neutral-200 px-4 py-2 rounded-lg text-sm hover:bg-neutral-300 transition-all">
           Toggle
+        </button>
+      </div>
+      <div className="flex justify-between items-center bg-white p-4 border border-neutral-200 rounded-lg shadow-sm">
+        <span>Logout of your account</span>
+        <button 
+        onClick={handleLogout}
+        className="bg-neutral-200 px-4 py-2 rounded-lg text-sm hover:bg-neutral-300 transition-all">
+          Logout
         </button>
       </div>
     </div>
@@ -30,6 +39,7 @@ function SettingSection({ userData }) {
 
 SettingSection.propTypes = {
   userData: PropTypes.object,
+  handleLogout: PropTypes.func.isRequired, // Ensure it's passed from the parent
 };
 
 export default SettingSection;

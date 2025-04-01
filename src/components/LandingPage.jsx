@@ -1,7 +1,20 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
+import { useNavigate,useLocation } from "react-router-dom";
 
 const LandingPage = () => {
   console.log("Rendering LandingPage");
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const storedUser = localStorage.getItem("userData");
+    if (token && storedUser) {
+      // Use the previous location if available; default to '/home'
+      const from = location.state?.from || "/home";
+      navigate(from, { replace: true });
+    }
+  }, [navigate, location]);
 
   // Remove (or comment out) old login state and modal logic
   // const [isLoginOpen, setIsLoginOpen] = useState(false);
@@ -15,6 +28,8 @@ const LandingPage = () => {
   const scrollToSection = (id) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   };
+
+  
 
   try {
     return (
